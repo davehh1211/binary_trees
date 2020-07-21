@@ -43,7 +43,7 @@ int binary_tree_is_perfect(const binary_tree_t *tree)
 
 	if (!tree)
 		return (0);
-	else if (!tree->left && !tree->right)
+	else if (binary_tree_is_leaf_2(tree))
 		return (0);
 
 	left = binary_tree_height_2(tree->left);
