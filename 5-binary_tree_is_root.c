@@ -7,5 +7,5 @@
  */
 int binary_tree_is_root(const binary_tree_t *node)
 {
-	return ((node->parent || !node) ? 0 : 1);
+	return ((!node->parent || !node) ? 1 : 0);
 }
