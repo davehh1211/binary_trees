@@ -1,24 +1,33 @@
 #include "binary_trees.h"
 /**
- * binary_tree_leaves - a function that counts
- * the leaves in a binary tree
- * @tree: is a pointer to the root node of the
- * tree to count the number of leaves
- * Return: the number of leaves
+ * binary_tree_is_leaf - a function that checks if a node is a leaf
+ * @node: is a pointer to the node to check
+ * Return: return 1 if node is a leaf, otherwise 0
  */
-size_t binary_tree_leaves(const binary_tree_t *tree)
+int binary_tree_is_leaf(const binary_tree_t *node)
 {
-	unsigned int count = 0;
+	return ((!node || node->left || node->right) ? 0 : 1);
+}
+
+/**
+ * binary_tree_height_2 - a function that measures
+ * the height of a binary tree
+ * @tree:  is a pointer to the root node of the
+ * tree to measure the height.
+ * Return: the number of height
+ */
+size_t binary_tree_height_2(const binary_tree_t *tree)
+{
+	size_t left = 0, right = 0;
 
 	if (!tree)
 		return (0);
-	if (!tree->left && !tree->right)
-		count++;
-	else
-		count = (binary_tree_leaves(tree->left) + binary_tree_leaves(tree->right));
-	return (count);
+	left = 1 + binary_tree_height_2(tree->left);
+	right = 1 + binary_tree_height_2(tree->right);
+	if (left != right)
+		return (0);
+	return (1);
 }
-
 
 /**
  * binary_tree_is_full - a function that checks if a binary tree is full
@@ -31,10 +40,10 @@ int binary_tree_is_full(const binary_tree_t *tree)
 
 	if (!tree)
 		return (0);
-
-	left = binary_tree_leaves(tree->left);
-	right = binary_tree_leaves(tree->right);
-	if (left == right)
+	if (binary_tree_is_leaf(tree))
 		return (1);
-	return (0);
+
+	left = binary_tree_height_2(tree->left);
+	right = binary_tree_height_2(tree->right);
+	return (binary_tree_height_2(tree->left) * binary_tree_height_2(tree->right));
 }
