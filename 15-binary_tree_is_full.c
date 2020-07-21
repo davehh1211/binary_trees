@@ -40,10 +40,10 @@ int binary_tree_is_full(const binary_tree_t *tree)
 
 	if (!tree)
 		return (0);
-	if (binary_tree_is_leaf_2(tree))
+	else if (binary_tree_is_leaf_2(tree))
 		return (1);
 
 	left = binary_tree_height_2(tree->left);
 	right = binary_tree_height_2(tree->right);
-	return (binary_tree_height_2(tree->left) * binary_tree_height_2(tree->right));
+	return (left * right);
 }
