@@ -6,7 +6,7 @@
  */
 binary_tree_t *binary_tree_uncle(binary_tree_t *node)
 {
-	if (!node || !node->parent->parent)
+	if (!node || !node->parent->parent || !node->parent)
 		return (NULL);
 
 
