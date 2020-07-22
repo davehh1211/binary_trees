@@ -10,25 +10,23 @@ int binary_tree_is_leaf_2(const binary_tree_t *node)
 }
 
 /**
- * binary_tree_height_2 - a function that measures
+ * binary_tree_height - a function that measures
  * the height of a binary tree
  * @tree:  is a pointer to the root node of the
  * tree to measure the height.
  * Return: the number of height
  */
-size_t binary_tree_height_2(const binary_tree_t *tree)
+size_t binary_tree_height(const binary_tree_t *tree)
 {
-	size_t left = 0, right = 0;
+	int left = 0, right = 0;
 
 	if (!tree)
 		return (0);
-	else if (binary_tree_is_leaf_2(tree))
-		return (0);
-	left = 1 + binary_tree_height_2(tree->left);
-	right = 1 + binary_tree_height_2(tree->right);
-	if (left == right)
-		return (1);
-	return (0);
+	if (tree->left)
+		left = 1 + binary_tree_height(tree->left);
+	if (tree->right)
+		right = 1 + binary_tree_height(tree->right);
+	return ((left > right) ? left : right);
 }
 
 /**
@@ -43,10 +41,14 @@ int binary_tree_is_perfect(const binary_tree_t *tree)
 
 	if (!tree)
 		return (0);
-	else if (binary_tree_is_leaf_2(tree))
+	if (binary_tree_is_leaf_2(tree))
+		return (1);
+	if (!tree->left || !tree->right)
 		return (0);
 
-	left = binary_tree_height_2(tree->left);
-	right = binary_tree_height_2(tree->right);
-	return (left * right);
+	left = binary_tree_height(tree->left);
+	right = binary_tree_height(tree->right);
+	if (left == right)
+		return (1);
+	return (0);
 }
