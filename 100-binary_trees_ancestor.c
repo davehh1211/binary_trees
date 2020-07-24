@@ -46,23 +46,21 @@ size_t binary_tree_height_2(const binary_tree_t *tree)
 binary_tree_t *binary_trees_ancestor(const binary_tree_t *first,
 const binary_tree_t *second)
 {
-	int firstnum = 0, secondnum = 0;
+	binary_tree_t *second_aux = (binary_tree_t *)second;
 
-	if (!second->parent || !first->parent)
+	if (!second || !first)
 		return (NULL);
 
-	if (first->parent == second->parent)
-		return (first->parent);
-	else if (first->n == second->parent->n)
-		return (second->parent);
-
-	firstnum = binary_tree_depth(first->parent);
-	secondnum = binary_tree_depth(second->parent);
-
-	if (firstnum < secondnum)
-		second = second->parent;
-	else
+	while (first)
+	{
+		while (second)
+		{
+			if (first == second)
+				return ((binary_tree_t *)second);
+			second = second->parent;
+		}
+		second = second_aux;
 		first = first->parent;
-
-	return (first->parent);
+	}
+	return (NULL);
 }
